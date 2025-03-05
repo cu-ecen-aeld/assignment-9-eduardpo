@@ -10,6 +10,7 @@ git submodule update
 source poky/oe-init-build-env
 
 CONFLINE="MACHINE = \"qemuarm64\""
+TOOL_CHAIN_PATH="PATH := \"/usr/local/arm-cross-compiler/install/arm-gnu-toolchain-14.2.rel1-x86_64-aarch64-none-linux-gnu/bin:${PATH}\""
 
 cat conf/local.conf | grep "${CONFLINE}" > /dev/null
 local_conf_info=$?
@@ -17,7 +18,7 @@ local_conf_info=$?
 if [ $local_conf_info -ne 0 ];then
 	echo "Append ${CONFLINE} in the local.conf file"
 	echo ${CONFLINE} >> conf/local.conf
-	
+	echo ${TOOL_CHAIN_PATH} >> conf/local.conf
 else
 	echo "${CONFLINE} already exists in the local.conf file"
 fi

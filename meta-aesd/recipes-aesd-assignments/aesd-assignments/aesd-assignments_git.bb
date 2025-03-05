@@ -4,11 +4,13 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 # TODO: Set this  with the path to your assignments rep.  Use ssh protocol and see lecture notes
 # about how to setup ssh-agent for passwordless access
-# SRC_URI = "git://git@github.com/cu-ecen-aeld/<your assignments repo>;protocol=ssh;branch=master"
+SRC_URI = "git://github.com/cu-ecen-aeld/assignments-3-and-later-eduardpo.git;protocol=ssh;branch=master \
+			file://queue.h \
+			"
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
-#SRCREV = "f99b82a5d4cb2a22810104f89d4126f52f4dfaba"
+SRCREV = "3fe64797f81852e2cf8f7b3fed880444ee9003ea"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -18,10 +20,12 @@ S = "${WORKDIR}/git/server"
 
 # TODO: Add the aesdsocket application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
-#FILES:${PN} += "${bindir}/aesdsocket"
+FILES:${PN} += "${bindir}/aesdsocket"
+localstatedir = "/usr"
+FILES:${PN} += "${localstatedir}/include/queue.h"
 # TODO: customize these as necessary for any libraries you need for your application
 # (and remove comment)
-#TARGET_LDFLAGS += "-pthread -lrt"
+TARGET_LDFLAGS += "-pthread -lrt"
 
 do_configure () {
 	:
@@ -39,4 +43,9 @@ do_install () {
 	# and
 	# https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-S
 	# See example at https://github.com/cu-ecen-aeld/ecen5013-yocto/blob/ecen5013-hello-world/meta-ecen5013/recipes-ecen5013/ecen5013-hello-world/ecen5013-hello-world_git.bb
+
+	install -d ${D}${bindir}
+	install -d ${D}${localstatedir}/include
+	install -m 0755 ${S}/aesdsocket ${D}${bindir}/aesdsocket
+	install -m 0755 ${WORKDIR}/queue.h ${D}${localstatedir}/include/queue.h	
 }

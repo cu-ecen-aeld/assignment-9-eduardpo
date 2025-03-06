@@ -1,3 +1,8 @@
+inherit update-rc.d
+
+INITSCRIPT_NAME = "aesdsocket-start-stop"
+INITSCRIPT_PARAMS = "defaults"
+
 # See https://git.yoctoproject.org/poky/tree/meta/files/common-licenses
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
@@ -21,7 +26,7 @@ S = "${WORKDIR}/git/server"
 # TODO: Add the aesdsocket application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
 FILES:${PN} += "${bindir}/aesdsocket"
-FILES:${PN} += "/etc/init.d/S99aesdsocket"
+#FILES:${PN} += "/etc/init.d/aesdsocket-start-stop"
 localstatedir = "/usr"
 FILES:${PN} += "${localstatedir}/include/queue.h"
 # TODO: customize these as necessary for any libraries you need for your application
@@ -49,6 +54,8 @@ do_install () {
 	install -d ${D}${localstatedir}/include
 	install -m 0755 ${S}/aesdsocket ${D}${bindir}/aesdsocket
 	install -m 0755 ${WORKDIR}/queue.h ${D}${localstatedir}/include/queue.h	
-	install -d ${D}/etc/init.d
-	install -m 0755 ${S}/aesdsocket-start-stop ${D}/etc/init.d/S99aesdsocket
+	install -d ${D}${sysconfdir}/init.d
+	install -m 0755 ${S}/aesdsocket-start-stop ${D}${sysconfdir}/init.d
 }
+
+FILES_${sysconfdir} += "${sysconfdir}/init.d/aesdsocket-start-stop"

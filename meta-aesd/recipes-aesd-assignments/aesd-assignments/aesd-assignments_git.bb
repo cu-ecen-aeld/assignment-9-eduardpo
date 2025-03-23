@@ -15,7 +15,7 @@ SRC_URI = "git://github.com/cu-ecen-aeld/assignments-3-and-later-eduardpo.git;pr
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
-SRCREV = "dffbc5b60e6746a5d73c461ab4313f5bc29ad3a9"
+SRCREV = "2977494e1c3d7d01e6d3c54d31da54f2724d026b"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -25,8 +25,6 @@ S = "${WORKDIR}/git/server"
 
 # TODO: Add the aesdsocket application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
-FILES:${PN} += "${bindir}/aesdsocket"
-#FILES:${PN} += "/etc/init.d/aesdsocket-start-stop"
 # TODO: customize these as necessary for any libraries you need for your application
 # (and remove comment)
 TARGET_LDFLAGS += "-pthread -lrt"
@@ -56,4 +54,5 @@ do_install () {
 	install -m 0755 ${S}/aesdsocket-start-stop ${D}${sysconfdir}/init.d
 }
 
-FILES_${sysconfdir} += "${sysconfdir}/init.d/aesdsocket-start-stop"
+FILES:${PN} += "${bindir}/aesdsocket"
+FILES:${PN} += "${sysconfdir}/init.d/aesdsocket-start-stop"

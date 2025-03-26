@@ -41,20 +41,5 @@ do_install () {
 	install -m 0755 ${S}/aesdchar_unload ${D}${sysconfdir}/init.d
 }
 
-# # Override the default install location to install the module in the kernel modules directory
-# FILES:${PN} += "${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/char/aesdchar.ko"
-
-# # Specify the kernel module name for packaging
-# MODULES:${PN} = "aesdchar.ko"
-
-# # Specify the kernel module install directory
-# KERNEL_MODULE_INSTALL_TARGET = "${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/char"
-
-# # Specify the kernel module directory for packaging
-# KERNEL_MODULE_DIR = "${KERNEL_MODULE_INSTALL_TARGET}"
-
-# Add the kernel module to the image
-#PACKAGE_WRITE_DEPS += "virtual/kernel"
-
 # Provide start up scripts
 FILES:${PN} += "${sysconfdir}/init.d/*"

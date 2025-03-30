@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 SRC_URI = "git://github.com/cu-ecen-aeld/assignments-3-and-later-eduardpo.git;protocol=ssh;branch=master \
           "
 PV = "1.0+git${SRCPV}"
-SRCREV = "124d8d14481532425167a7bdb2043ae3bf2a1458"
+SRCREV = "43538ff22e2de8ad81eba55c9b996041fd931c2b"
 
 S = "${WORKDIR}/git/aesd-char-driver"
 UNPACKDIR = "${S}"
